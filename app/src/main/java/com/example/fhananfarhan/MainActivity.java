@@ -4,11 +4,7 @@ import android.os.Bundle;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,22 +19,15 @@ public class MainActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.ratingBar);
         ratingText = findViewById(R.id.ratingText);
 
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                if (fromUser) { // only handle user click
-                    int intRating = (int) rating;
-                    ratingText.setText("You gave " + intRating + " star" + (intRating > 1 ? "s" : ""));
-
-                    CommentFragment commentFragment = CommentFragment.newInstance(rating);
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(android.R.id.content, commentFragment)
-                            .addToBackStack(null)
-                            .commit();
-                }
+        ratingBar.setOnRatingBarChangeListener((bar, rating, fromUser) -> {
+            if (fromUser) {
+                ratingText.setText("You gave " + (int) rating + " star" + ((int) rating > 1 ? "s" : ""));
+                // Open comment fragment
+                getSupportFragmentManager().beginTransaction()
+                        .replace(android.R.id.content, CommentFragment.newInstance(rating))
+                        .addToBackStack(null)
+                        .commit();
             }
         });
-
-
     }
 }

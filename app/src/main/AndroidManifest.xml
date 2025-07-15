@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.fhananfarhan">
+
+    <!-- ✅ Correct Internet permission placement -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FarhanApplication"
         tools:targetApi="31">
+
         <activity android:name=".CommentListActivity"
             android:exported="true">
             <intent-filter>
@@ -23,10 +28,10 @@
         <activity
             android:name=".SummaryActivity"
             android:exported="false" />
+
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>

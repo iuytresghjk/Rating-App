@@ -12,39 +12,38 @@ import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
 
-    List<CommentItem> comments;
+    private List<CommentItem> commentList;
 
-    public CommentAdapter(List<CommentItem> comments) {
-        this.comments = comments;
-    }
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView commentText, ratingText;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            commentText = itemView.findViewById(R.id.itemCommentText);
-            ratingText = itemView.findViewById(R.id.itemRatingText);
-        }
+    public CommentAdapter(List<CommentItem> commentList) {
+        this.commentList = commentList;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.comment_item, parent, false);
+    public CommentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CommentItem item = comments.get(position);
-        holder.ratingText.setText("⭐ " + item.rating);
-        holder.commentText.setText(item.comment);
+    public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
+        CommentItem item = commentList.get(position);
+        holder.ratingText.setText("Rating: " + item.getRating());
+        holder.commentText.setText("Comment: " + item.getComment());
     }
 
     @Override
     public int getItemCount() {
-        return comments.size();
+        return commentList.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView ratingText, commentText;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ratingText = itemView.findViewById(R.id.itemRatingText);
+            commentText = itemView.findViewById(R.id.itemCommentText);
+        }
     }
 }

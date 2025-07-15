@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "504706755712",
+    "project_id": "farhancommentsapp",
+    "storage_bucket": "farhancommentsapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504706755712:android:5a170db73a11e0acd2ca65",
+        "android_client_info": {
+          "package_name": "com.example.fhananfarhan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIoLaH7i2ENZOkzpKETtqNd1-AXUb-ws8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

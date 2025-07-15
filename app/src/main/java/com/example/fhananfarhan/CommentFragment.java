@@ -13,13 +13,16 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class CommentFragment extends Fragment {
 
     private static final String ARG_RATING = "rating";
     private float rating;
-
-    public CommentFragment() {
-    }
 
     public static CommentFragment newInstance(float rating) {
         CommentFragment fragment = new CommentFragment();
@@ -38,8 +41,7 @@ public class CommentFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comment, container, false);
 
         TextView ratingDisplay = view.findViewById(R.id.ratingDisplay);
@@ -48,23 +50,31 @@ public class CommentFragment extends Fragment {
 
         ratingDisplay.setText("Rating: " + rating);
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         sendButton.setOnClickListener(v -> {
             String comment = commentInput.getText().toString().trim();
 
             if (TextUtils.isEmpty(comment)) {
                 Toast.makeText(getContext(), "Please add a comment", Toast.LENGTH_SHORT).show();
             } else {
-                CommentItem item = new CommentItem(rating, comment);
-                CommentStorage.saveComment(getContext(), item);
+                Map<String, Object> data = new HashMap<>();
+                data.put("comment", comment);
+                data.put("rating", rating);
+                data.put("email", "user@example.com");
+                data.put("timestamp", FieldValue.serverTimestamp());  // 🔥 for sorting
 
-                Intent intent = new Intent(getActivity(), CommentListActivity.class);
-                startActivity(intent);
-
-                requireActivity().finish();
+                db.collection("comments")
+                        .add(data)
+                        .addOnSuccessListener(documentReference -> {
+                            Toast.makeText(getContext(), "Comment submitted!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getActivity(), CommentListActivity.class));
+                            requireActivity().finish();
+                        })
+                        .addOnFailureListener(e ->
+                                Toast.makeText(getContext(), "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
             }
         });
-
-
 
         return view;
     }
