@@ -3,6 +3,7 @@ package com.example.fhananfarhan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,40 +11,42 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
+    private List<CommentItem> comments;
 
-    private List<CommentItem> commentList;
+    public CommentAdapter(List<CommentItem> comments) {
+        this.comments = comments;
+    }
 
-    public CommentAdapter(List<CommentItem> commentList) {
-        this.commentList = commentList;
+    public static class CommentViewHolder extends RecyclerView.ViewHolder {
+        TextView reviewText, dateText;
+        RatingBar ratingBar;
+
+        public CommentViewHolder(View itemView) {
+            super(itemView);
+            reviewText = itemView.findViewById(R.id.itemCommentText);
+            dateText = itemView.findViewById(R.id.itemRatingText);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
+        }
     }
 
     @NonNull
     @Override
-    public CommentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_item, parent, false);
-        return new ViewHolder(view);
+    public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new CommentViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.comment_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
-        CommentItem item = commentList.get(position);
-        holder.ratingText.setText("Rating: " + item.getRating());
-        holder.commentText.setText("Comment: " + item.getComment());
+    public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
+        CommentItem comment = comments.get(position);
+        holder.reviewText.setText(comment.getReview());
+        holder.dateText.setText(comment.getCreated_at());
+        holder.ratingBar.setRating(comment.getRating());
     }
 
     @Override
     public int getItemCount() {
-        return commentList.size();
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView ratingText, commentText;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ratingText = itemView.findViewById(R.id.itemRatingText);
-            commentText = itemView.findViewById(R.id.itemCommentText);
-        }
+        return comments.size();
     }
 }

@@ -14,6 +14,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- ⭐ Rating TextView -->
         <TextView
             android:id="@+id/itemRatingText"
             android:layout_width="wrap_content"
@@ -23,6 +24,17 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
+        <!-- ⭐ Add RatingBar below -->
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1"
+            android:isIndicator="true"
+            android:layout_marginTop="4dp" />
+
+        <!-- 💬 Comment TextView -->
         <TextView
             android:id="@+id/itemCommentText"
             android:layout_width="wrap_content"
@@ -31,5 +43,6 @@
             android:textSize="15sp"
             android:textColor="@android:color/black"
             android:layout_marginTop="4dp" />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -1,37 +1,30 @@
 package com.example.fhananfarhan;
 
-import com.google.firebase.Timestamp;
-
 public class CommentItem {
-    private String comment;
-    private float rating;
-    private String email;
-    private Timestamp timestamp;
+    private String id;
+    private int rating;
+    private String review;
+    private String created_at;
+    private String uid;
 
-    public CommentItem() {
-        // required by Firebase
+    // Getter methods
+    public String getId() {
+        return id;
     }
 
-    public CommentItem(String comment, float rating, String email) {
-        this.comment = comment;
-        this.rating = rating;
-        this.email = email;
-        this.timestamp = null; // Firestore will set it server-side
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public float getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public String getEmail() {
-        return email;
+    public String getReview() {
+        return review;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public String getUid() {
+        return uid;
     }
 }

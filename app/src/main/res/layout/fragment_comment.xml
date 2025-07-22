@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -29,4 +30,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit Comment" />
+
+    <!-- ✅ Lottie Animation View -->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:lottie_rawRes="@raw/star_rating"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false" />
 </LinearLayout>

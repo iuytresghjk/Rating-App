@@ -1,0 +1,13 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background (empty stars) -->
+    <item android:id="@android:id/background"
+        android:drawable="@android:drawable/star_big_off" />
+
+    <!-- Secondary progress (partially filled star for half ratings) -->
+    <item android:id="@android:id/secondaryProgress"
+        android:drawable="@android:drawable/star_big_off" />
+
+    <!-- Filled stars -->
+    <item android:id="@android:id/progress"
+        android:drawable="@drawable/star_yellow" />
+</layer-list>

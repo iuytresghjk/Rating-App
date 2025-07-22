@@ -15,10 +15,10 @@ public class CommentStorage {
     private static final String PREF_NAME = "comment_pref";
     private static final String KEY_COMMENTS = "comments";
 
-    public static void saveComment(Context context, CommentItem item) {
+    public static void saveComment(Context context, RatingItem item) {
 
 
-        ArrayList<CommentItem> list = loadComments(context);
+        ArrayList<RatingItem> list = loadComments(context);
         list.add(item);
 
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -27,12 +27,12 @@ public class CommentStorage {
         editor.apply();
     }
 
-    public static ArrayList<CommentItem> loadComments(Context context) {
+    public static ArrayList<RatingItem> loadComments(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         String json = prefs.getString(KEY_COMMENTS, null);
         if (json == null) return new ArrayList<>();
 
-        Type type = new TypeToken<ArrayList<CommentItem>>() {}.getType();
+        Type type = new TypeToken<ArrayList<RatingItem>>() {}.getType();
         return new Gson().fromJson(json, type);
     }
 }

@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="@drawable/background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 🔷 Logo Image at Top -->
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/logoo"
+    android:contentDescription="App Logo" />
+
+    <!-- 🔐 Email Field -->
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:hint="Email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- 🔐 Password Field -->
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- 🔘 Login Button -->
+    <Button
+        android:id="@+id/buttonLogin"
+        android:text="Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- 🔁 Go to Signup Button -->
+    <Button
+        android:id="@+id/buttonToSignup"
+        android:text="Go to Signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

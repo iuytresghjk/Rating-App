@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    android:padding="16dp"
+    android:gravity="top">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_person"
+        android:background="@drawable/circle_background"
+        android:padding="16dp"
+        android:contentDescription="Profile" />
+
+    <TextView
+        android:id="@+id/navUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome, User"
+        android:textSize="18sp"
+        android:paddingTop="12dp"/>
+
+    <TextView
+        android:id="@+id/navEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="email@example.com"
+        android:textSize="14sp"
+        android:textColor="#888"
+        android:paddingBottom="20dp" />
+
+    <Button
+        android:id="@+id/navLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:backgroundTint="#FF5252"
+        android:textColor="#FFF"/>
+</LinearLayout>

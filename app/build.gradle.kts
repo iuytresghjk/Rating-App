@@ -51,6 +51,14 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    implementation ("com.android.volley:volley:1.2.1")
+
+    implementation ("com.google.android.material:material:1.11.0")
+
+    implementation ("com.airbnb.android:lottie:6.1.0")
+
+
+
     implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
     implementation ("com.google.firebase:firebase-firestore:24.4.3")
 
