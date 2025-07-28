@@ -1,90 +1,123 @@
 package com.example.fhananfarhan;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import java.io.IOException;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    DrawerLayout drawerLayout;
-    BottomNavigationView bottomNav;
-    ActionBarDrawerToggle toggle;
+    private static final int REQUEST_PERMISSION_CODE = 100;
+    private ImageView profileImageView;
+    private Button changeImageButton, navLogout;
+    private TextView navUsername, navEmail;
 
-    TextView navUsername, navEmail;
-    Button navLogout;
+    private final ActivityResultLauncher<Intent> imagePickerLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri imageUri = result.getData().getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                        profileImageView.setImageBitmap(bitmap);
+                    } catch (IOException e) {
+                        Toast.makeText(this, "Image load failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        // 🔧 Setup toolbar & drawer
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        drawerLayout = findViewById(R.id.drawerLayout);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        // 🎯 Get user data
-        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        String username = prefs.getString("saved_name", "User");
-        String email = prefs.getString("saved_email", "email@example.com");
-
+        profileImageView = findViewById(R.id.profileImageView);
+        changeImageButton = findViewById(R.id.ChangeImage);
         navUsername = findViewById(R.id.navUsername);
         navEmail = findViewById(R.id.navEmail);
         navLogout = findViewById(R.id.navLogout);
 
-        navUsername.setText("Welcome, " + username);
-        navEmail.setText(email);
+        // ✅ Get data from login
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+        String email = intent.getStringExtra("email");
+
+        navUsername.setText("Welcome, " + (username != null ? username : "User"));
+        navEmail.setText(email != null ? email : "email@example.com");
+
+        changeImageButton.setOnClickListener(v -> {
+            if (hasPermission()) {
+                openGallery();
+            } else {
+                requestPermission();
+            }
+        });
 
         navLogout.setOnClickListener(v -> {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("isLoggedIn", false); // 🔐 explicitly set false
-            editor.remove("saved_name");
-            editor.remove("saved_email");
+            // 🔒 Clear login session
+            SharedPreferences.Editor editor = getSharedPreferences("MyPrefs", MODE_PRIVATE).edit();
+            editor.clear();
             editor.apply();
 
+            Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
+    }
 
+    private boolean hasPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+                    == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED;
+        }
+    }
 
-        // ✅ Fix: Initialize bottomNav
-        bottomNav = findViewById(R.id.bottomNavigationView);
+    private void requestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQUEST_PERMISSION_CODE);
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE);
+        }
+    }
 
-        // 🧭 Bottom Navigation
-        bottomNav.setOnNavigationItemSelectedListener(item -> {
-            int itemId = item.getItemId();
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        imagePickerLauncher.launch(intent);
+    }
 
-            if (itemId == R.id.nav_home) {
-                // ✅ Open CommentListActivity as Home
-                Intent intent = new Intent(this, CommentListActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 🔄 Remove previous instances
-                startActivity(intent);
-                finish(); // optional, to remove DashboardActivity from backstack
-                return true;
-            } else if (itemId == R.id.nav_comments) {
-                // ✅ Open MainActivity as Add Comment
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish(); // optional
-                return true;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openGallery();
+            } else {
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
-            return false;
-        });
-
-
-
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

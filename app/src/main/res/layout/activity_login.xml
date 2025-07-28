@@ -13,7 +13,7 @@
         android:layout_height="250dp"
         android:layout_marginBottom="24dp"
         android:src="@drawable/logoo"
-    android:contentDescription="App Logo" />
+        android:contentDescription="App Logo" />
 
     <!-- 🔐 Email Field -->
     <EditText
@@ -30,17 +30,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- 🔘 Login Button -->
+    <!-- 🔘 Login Button (increased size) -->
     <Button
         android:id="@+id/buttonLogin"
         android:text="Login"
+        android:textSize="18sp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp" />
 
-    <!-- 🔁 Go to Signup Button -->
+    <!-- 🔁 Go to Signup Button (increased size) -->
     <Button
         android:id="@+id/buttonToSignup"
-        android:text="Go to Signup"
+        android:text="Signup"
+        android:textSize="18sp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp" />
 </LinearLayout>

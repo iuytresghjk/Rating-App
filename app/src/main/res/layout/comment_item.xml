@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -14,7 +13,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- ⭐ Rating TextView -->
         <TextView
             android:id="@+id/itemRatingText"
             android:layout_width="wrap_content"
@@ -24,7 +22,6 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <!-- ⭐ Add RatingBar below -->
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
@@ -34,7 +31,6 @@
             android:isIndicator="true"
             android:layout_marginTop="4dp" />
 
-        <!-- 💬 Comment TextView -->
         <TextView
             android:id="@+id/itemCommentText"
             android:layout_width="wrap_content"
@@ -44,5 +40,13 @@
             android:textColor="@android:color/black"
             android:layout_marginTop="4dp" />
 
+        <ImageView
+            android:id="@+id/deleteCommentBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:contentDescription="Delete"
+            card_view:tint="@android:color/holo_red_dark" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

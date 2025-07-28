@@ -5,13 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Main screen layout -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- ✅ Toolbar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -20,7 +18,6 @@
             android:title="Dashboard"
             android:titleTextColor="#FFF" />
 
-        <!-- ✅ RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/commentRecyclerView"
             android:layout_width="match_parent"
@@ -28,7 +25,6 @@
             android:layout_weight="1"
             android:padding="8dp" />
 
-        <!-- ✅ Bottom Navigation -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
@@ -38,7 +34,6 @@
             app:labelVisibilityMode="labeled" />
     </LinearLayout>
 
-    <!-- ✅ Drawer Navigation -->
     <LinearLayout
         android:id="@+id/navDrawer"
         android:layout_width="280dp"
@@ -47,7 +42,6 @@
         android:orientation="vertical"
         android:background="#FFF">
 
-        <!-- Drawer Header & Info -->
         <include layout="@layout/activity_main_drawer"/>
     </LinearLayout>
 

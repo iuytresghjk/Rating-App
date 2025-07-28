@@ -8,6 +8,7 @@
     android:gravity="top">
 
     <ImageView
+        android:id="@+id/profileImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
@@ -15,6 +16,17 @@
         android:background="@drawable/circle_background"
         android:padding="16dp"
         android:contentDescription="Profile" />
+
+    <Button
+        android:id="@+id/ChangeImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Upload Image"
+        android:backgroundTint="#FF5252"
+        android:textColor="#FFF" />
+
+
 
     <TextView
         android:id="@+id/navUsername"
